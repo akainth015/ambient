@@ -1,0 +1,35 @@
+<idea-plugin>
+    <id>me.akainth.ambient</id>
+    <name>Ambient</name>
+    <vendor email="aanand@akainth.me" url="https://akainth.me">Aanand Kainth</vendor>
+
+    <description><![CDATA[
+    Adds functionality to interact with WebCAT
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <applicationService serviceImplementation="me.akainth.ambient.configuration.ConfigurationService"/>
+        <toolWindow factoryClass="me.akainth.ambient.ToolWindow" anchor="right" id="Ambient"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="Ambient" text="Ambient" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <action id="Ambient.Configure" class="me.akainth.ambient.configuration.ConfigureAction"
+                    text="Configure Ambient"
+                    description="Configure the URLs and credentials Ambient will use to submit to WebCAT">
+            </action>
+            <action id="me.akainth.ambient.submitter.SubmitAction" class="me.akainth.ambient.submitter.SubmitAction"
+                    text="Submit Assignment"
+                    description="Build a JAR from your code and submit it to WebCAT for grading"/>
+        </group>
+    </actions>
+</idea-plugin>
