@@ -13,22 +13,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 public class SnarfModuleWizardStep extends ModuleWizardStep {
+    private static String SNARF_SITE = "Ambient Snarf Site";
     private JPanel root;
     private SyncedTreeView packagesPreview;
-
     private SnarfModuleBuilder moduleBuilder;
     private WizardContext wizardContext;
-
-    private static String SNARF_SITE = "Ambient Snarf Site";
 
     public SnarfModuleWizardStep(SnarfModuleBuilder moduleBuilder, WizardContext wizardContext) {
         this.moduleBuilder = moduleBuilder;
         this.wizardContext = wizardContext;
 
         packagesPreview.getTree().getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        packagesPreview.addConfirmationListener(selectedNodes -> {
-            wizardContext.requestNextStep();
-        });
+        packagesPreview.addConfirmationListener(selectedNodes -> wizardContext.requestNextStep());
     }
 
     @Override

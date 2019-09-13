@@ -14,8 +14,6 @@ import javax.swing.tree.TreeNode;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -28,16 +26,14 @@ import java.util.List;
  * An interface component that updates a tree view with data from a remote source
  */
 public class SyncedTreeView {
+    private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     private JTextField sourceInput;
     private Tree tree;
     @SuppressWarnings("unused")
     private JPanel root;
     private JLabel sourceInputLabel;
-
     private DocumentInterpreter interpreter;
     private List<ConfirmationListener> confirmationListeners = new ArrayList<>();
-
-    private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
     /**
      * Creates a tree view with a label, input field, and the specified document interpreter

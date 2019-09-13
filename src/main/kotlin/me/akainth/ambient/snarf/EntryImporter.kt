@@ -1,6 +1,5 @@
 package me.akainth.ambient.snarf
 
-import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 import java.net.URL
 import java.util.zip.ZipEntry

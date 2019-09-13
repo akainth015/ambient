@@ -28,8 +28,10 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""
-      Create projects through the IntelliJ module wizard instead of a tool window""")
+    changeNotes(
+        """
+      Create projects through the IntelliJ module wizard instead of a tool window"""
+    )
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
