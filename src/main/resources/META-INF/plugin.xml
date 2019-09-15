@@ -23,5 +23,9 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="me.akainth.ambient.actions.SubmitAction" class="me.akainth.ambient.actions.SubmitAction"
+                text="Submit Assignment" description="Compile your assignment and submit it to WebCAT">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
     </actions>
 </idea-plugin>

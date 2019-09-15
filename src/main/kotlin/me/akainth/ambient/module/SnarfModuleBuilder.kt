@@ -16,7 +16,9 @@ import me.akainth.ambient.snarf.EntryImporter
 import me.akainth.ambient.snarf.Package
 import java.io.IOException
 
-
+/**
+ * The module that will appear in the New Project and New Module dialogs.
+ */
 class SnarfModuleBuilder : JavaModuleBuilder(), ModuleBuilderListener {
     lateinit var snarfPackage: Package
 

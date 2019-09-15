@@ -12,6 +12,9 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+/**
+ * Allows a user to configure which package they will import from a snarf site
+ */
 public class SnarfModuleWizardStep extends ModuleWizardStep {
     private static String SNARF_SITE = "Ambient Snarf Site";
     private JPanel root;
@@ -56,6 +59,7 @@ public class SnarfModuleWizardStep extends ModuleWizardStep {
         PropertiesComponent.getInstance().setValue(SNARF_SITE, packagesPreview.getSourceUrl());
         moduleBuilder.setSnarfPackage(getSelectedPackage());
         wizardContext.setDefaultModuleName(getSelectedPackage().getName());
+        wizardContext.getWizard();
     }
 
     private void createUIComponents() {
