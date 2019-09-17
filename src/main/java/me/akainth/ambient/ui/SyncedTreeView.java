@@ -25,14 +25,14 @@ import java.util.List;
 /**
  * An interface component that updates a tree view with data from a remote source
  */
-public class SyncedTreeView {
+public class SyncedTreeView<T> {
     private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     private JTextField sourceInput;
     private Tree tree;
     @SuppressWarnings("unused")
     private JPanel root;
     private JLabel sourceInputLabel;
-    private DocumentInterpreter interpreter;
+    private DocumentInterpreter<T> interpreter;
     private List<ConfirmationListener> confirmationListeners = new ArrayList<>();
 
     /**
@@ -42,7 +42,7 @@ public class SyncedTreeView {
      * @param defaultText the text that populates the input field by default
      * @param interpreter transforms a given XML document into a TreeModel for display
      */
-    public SyncedTreeView(String label, @Nullable String defaultText, DocumentInterpreter interpreter) {
+    public SyncedTreeView(String label, @Nullable String defaultText, DocumentInterpreter<T> interpreter) {
         this.interpreter = interpreter;
 
         sourceInputLabel.setText(label);
@@ -112,6 +112,15 @@ public class SyncedTreeView {
     }
 
     /**
+     * Can be used to find out additional information from the document that isn't part of the tree model
+     *
+     * @return the {@link DocumentInterpreter} that converts the documents to {@link TreeModel}
+     */
+    public DocumentInterpreter<T> getInterpreter() {
+        return interpreter;
+    }
+
+    /**
      * Configuration for the tree should be performed through this, such as limiting selection to one node
      *
      * @return the tree that is used to show the result of the interpretation
@@ -153,7 +162,9 @@ public class SyncedTreeView {
     /**
      * Interprets XML documents according to their implementation
      */
-    public interface DocumentInterpreter {
+    public interface DocumentInterpreter<T> {
+        T getModel();
+
         /**
          * Transforms an XML document into a TreeModel for display
          *

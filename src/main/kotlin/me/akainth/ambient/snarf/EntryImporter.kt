@@ -5,15 +5,29 @@ import java.net.URL
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
-class EntryImporter(var root: VirtualFile) {
+class EntryImporter(
+    private val contentRoot: VirtualFile,
+    private val sourceRoot: VirtualFile
+) {
 
     private val excludes = arrayListOf<Regex>()
+    private val sources = arrayListOf<Regex>()
+
+    val listeners = mutableSetOf<(Pair<ZipEntry, VirtualFile>) -> Any>()
 
     /**
      * Add a regex that specifies which files will not be imported
      */
     fun addExclusionPattern(blob: String): EntryImporter {
         excludes += blob.toRegex()
+        return this
+    }
+
+    /**
+     * Add a regex that specifies which files will be added to the source root
+     */
+    fun addSourcePattern(blob: String): EntryImporter {
+        sources += blob.toRegex()
         return this
     }
 
@@ -26,12 +40,9 @@ class EntryImporter(var root: VirtualFile) {
 
         var zipEntry = zipInputStream.nextEntry
         while (zipEntry != null) {
-            if (excludes.any { zipEntry.name.matches(it) }) {
-                zipEntry = zipInputStream.nextEntry
-                continue
-            }
-            if (!zipEntry.isDirectory) {
-                createFile(zipEntry, zipInputStream)
+            if (!zipEntry.isDirectory && !excludes.any { zipEntry.name.matches(it) }) {
+                val created = createFile(zipEntry, zipInputStream)
+                listeners.forEach { it(created) }
             }
 
             zipEntry = zipInputStream.nextEntry
@@ -40,21 +51,21 @@ class EntryImporter(var root: VirtualFile) {
         return this
     }
 
-    private fun createFile(entry: ZipEntry, zipInputStream: ZipInputStream) {
+    private fun createFile(entry: ZipEntry, zipInputStream: ZipInputStream): Pair<ZipEntry, VirtualFile> {
         val parts = entry.name.split("/")
-        val parent = parts.dropLast(1).fold(root) { path, part ->
-            path.findChild(part) ?: path.createChildDirectory(this, part)
+        val root = when {
+            sources.any { it.matches(entry.name) } -> sourceRoot
+            else -> contentRoot
         }
+        val parent = parts.dropLast(1)
+            .fold(root) { path, part ->
+                path.findChild(part) ?: path.createChildDirectory(this, part)
+            }
         val file = parent.findOrCreateChildData(this, parts.last())
         val outputStream = file.getOutputStream(this)
-
-        val buffer = ByteArray(16 * 1024) // A 16  kB buffer
-        while (true) {
-            val bytesRead = zipInputStream.read(buffer)
-            if (bytesRead == -1)
-                break
-            outputStream.write(buffer, 0, bytesRead)
-        }
+        zipInputStream.copyTo(outputStream)
         outputStream.close()
+
+        return Pair(entry, file)
     }
 }

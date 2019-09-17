@@ -7,9 +7,11 @@ import com.intellij.openapi.options.ConfigurationException;
 import me.akainth.ambient.snarf.Package;
 import me.akainth.ambient.snarf.SnarfSite;
 import me.akainth.ambient.ui.SyncedTreeView;
+import org.w3c.dom.Document;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
@@ -59,11 +61,23 @@ public class SnarfModuleWizardStep extends ModuleWizardStep {
         PropertiesComponent.getInstance().setValue(SNARF_SITE, packagesPreview.getSourceUrl());
         moduleBuilder.setSnarfPackage(getSelectedPackage());
         wizardContext.setDefaultModuleName(getSelectedPackage().getName());
-        wizardContext.getWizard();
     }
 
     private void createUIComponents() {
-        packagesPreview = new SyncedTreeView(
-                "Snarf Site", PropertiesComponent.getInstance().getValue(SNARF_SITE), document -> new SnarfSite(document).getTreeModel());
+        packagesPreview = new SyncedTreeView<>(
+                "Snarf Site", PropertiesComponent.getInstance().getValue(SNARF_SITE), new SyncedTreeView.DocumentInterpreter<SnarfSite>() {
+            private SnarfSite myModel;
+
+            @Override
+            public SnarfSite getModel() {
+                return myModel;
+            }
+
+            @Override
+            public TreeModel interpret(Document document) {
+                myModel = new SnarfSite(document);
+                return myModel.getTreeModel();
+            }
+        });
     }
 }

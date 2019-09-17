@@ -14,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3", "okhttp", "4.1.0")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
     testCompile("junit", "junit", "4.12")
