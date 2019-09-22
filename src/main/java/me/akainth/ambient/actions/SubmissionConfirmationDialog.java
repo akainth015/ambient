@@ -48,7 +48,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
             moduleNames[i] = modules[i].getName();
         }
 
-        moduleBox.addItemListener(itemEvent -> this.target = (Module) itemEvent.getItem());
+        moduleBox.addItemListener(itemEvent -> this.target = ModuleManager.getInstance(project).findModuleByName((String) itemEvent.getItem()));
         moduleBox.setModel(new DefaultComboBoxModel<>(moduleNames));
         moduleBox.setSelectedItem(target.getName());
 
