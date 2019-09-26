@@ -23,7 +23,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     setPlugins("java")
-    version = "2019.2.3"
+    version = "LATEST-EAP-SNAPSHOT"
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
