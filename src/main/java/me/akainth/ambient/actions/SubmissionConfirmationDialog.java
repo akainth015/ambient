@@ -34,6 +34,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
     private JCheckBox reformatCheckBox;
     private JCheckBox reorganizeCheckBox;
     private JCheckBox optimizeImportsCheckBox;
+    private JTextField partnersTextField;
 
     private Module target;
 
@@ -51,6 +52,8 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
         moduleBox.addItemListener(itemEvent -> this.target = ModuleManager.getInstance(project).findModuleByName((String) itemEvent.getItem()));
         moduleBox.setModel(new DefaultComboBoxModel<>(moduleNames));
         moduleBox.setSelectedItem(target.getName());
+
+        assignmentPicker.addConfirmationListener(selectedNodes -> close(OK_EXIT_CODE, true));
 
         reformatCheckBox.addChangeListener(changeEvent -> {
             if (reformatCheckBox.isSelected()) {
@@ -131,5 +134,9 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
 
     public JCheckBox getOptimizeImportsCheckBox() {
         return optimizeImportsCheckBox;
+    }
+
+    public JTextField getPartnersTextField() {
+        return partnersTextField;
     }
 }
