@@ -47,6 +47,7 @@ class SubmitAction : AnAction() {
                     ModuleManager.getInstance(project).modules.firstOrNull()
                 }
                 ?: throw IllegalStateException("There are no modules in this project")
+
             val submissionConfirmationDialog = SubmissionConfirmationDialog(e.project, module)
             if (submissionConfirmationDialog.showAndGet()) {
                 PropertiesComponent.getInstance()
@@ -57,25 +58,29 @@ class SubmitAction : AnAction() {
                 )
                 PasswordSafe.instance.set(credentialAttributes, credentials)
 
+                val project = module.project
                 if (submissionConfirmationDialog.reformatCheckBox.isSelected) {
-                    e.project?.let { project ->
-                        reformat(
-                            project,
-                            submissionConfirmationDialog.target,
-                            submissionConfirmationDialog.rearrangeCheckBox.isSelected,
-                            submissionConfirmationDialog.optimizeImportsCheckBox.isSelected
-                        )
-                    }
+                    reformat(
+                        project,
+                        submissionConfirmationDialog.target,
+                        submissionConfirmationDialog.rearrangeCheckBox.isSelected,
+                        submissionConfirmationDialog.optimizeImportsCheckBox.isSelected
+                    )
                 }
 
-                CompilerManager.getInstance(e.project).compile(module) { aborted, errors, _, _ ->
+                CompilerManager.getInstance(project).compile(module) { aborted, errors, _, _ ->
                     if (!aborted && errors == 0) {
                         val archive =
                             archive(
                                 module,
                                 submissionConfirmationDialog.assignmentPicker.interpreter.model.excludes + submissionConfirmationDialog.assignment.excludes
                             )
-                        submitTo(submissionConfirmationDialog.assignment, credentials, archive)
+                        submitTo(
+                            submissionConfirmationDialog.assignment,
+                            credentials,
+                            archive,
+                            submissionConfirmationDialog.partnersTextField.text
+                        )
                     }
                 }
             }
@@ -128,7 +133,12 @@ class SubmitAction : AnAction() {
         )
     }
 
-    private fun submitTo(assignment: Assignment, credentials: Credentials, file: File) {
+    private fun submitTo(
+        assignment: Assignment,
+        credentials: Credentials,
+        file: File,
+        partners: String
+    ) {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
         val username = credentials.userName!!
@@ -137,6 +147,7 @@ class SubmitAction : AnAction() {
             val value = when (paramValue) {
                 "\${user}" -> username
                 "\${pw}" -> password.toString()
+                "\${partners}" -> partners
                 else -> paramValue
             }
             requestBody.addFormDataPart(name, value)
