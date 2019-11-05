@@ -7,13 +7,14 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.0.2"
+version = "2.0.4"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    @Suppress("SpellCheckingInspection")
     implementation("com.squareup.okhttp3", "okhttp", "4.1.0")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
@@ -29,10 +30,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes(
-        """
-      Create projects through the IntelliJ module wizard instead of a tool window"""
-    )
+    changeNotes("""Snarfed projects are now compatible with Eclipse""")
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"

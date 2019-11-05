@@ -41,6 +41,7 @@ import java.util.zip.ZipEntry
 class SubmitAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         try {
+            // Resolve the module being submitted automatically
             val module = ModuleUtil.findModuleForFile(e.getData(LangDataKeys.PSI_FILE))
                 ?: e.getData(LangDataKeys.MODULE)
                 ?: e.project?.let { project ->
@@ -50,6 +51,7 @@ class SubmitAction : AnAction() {
 
             val submissionConfirmationDialog = SubmissionConfirmationDialog(e.project, module)
             if (submissionConfirmationDialog.showAndGet()) {
+                // Persist the username and password used for submission
                 PropertiesComponent.getInstance()
                     .setValue(SUBMISSION_ROOT, submissionConfirmationDialog.assignmentPicker.sourceUrl)
                 val credentials = Credentials(
@@ -59,6 +61,7 @@ class SubmitAction : AnAction() {
                 PasswordSafe.instance.set(credentialAttributes, credentials)
 
                 val project = module.project
+                // Reformat the project
                 if (submissionConfirmationDialog.reformatCheckBox.isSelected) {
                     reformat(
                         project,
@@ -68,13 +71,13 @@ class SubmitAction : AnAction() {
                     )
                 }
 
+                // Compile the project, and submit if there are no errors
                 CompilerManager.getInstance(project).compile(module) { aborted, errors, _, _ ->
                     if (!aborted && errors == 0) {
+                        val excludes = submissionConfirmationDialog.assignmentPicker.interpreter.model.excludes +
+                                submissionConfirmationDialog.assignment.excludes
                         val archive =
-                            archive(
-                                module,
-                                submissionConfirmationDialog.assignmentPicker.interpreter.model.excludes + submissionConfirmationDialog.assignment.excludes
-                            )
+                            archive(module, excludes)
                         submitTo(
                             submissionConfirmationDialog.assignment,
                             credentials,
@@ -95,6 +98,9 @@ class SubmitAction : AnAction() {
         }
     }
 
+    /**
+     * Generate a JAR file with all of the files within the module source roots
+     */
     private fun archive(module: Module, excludes: Array<String>): File {
         val archive = File.createTempFile(module.name, ".jar")
         val jarOutputStream = JarOutputStream(archive.outputStream())
@@ -136,7 +142,7 @@ class SubmitAction : AnAction() {
     private fun submitTo(
         assignment: Assignment,
         credentials: Credentials,
-        file: File,
+        archive: File,
         partners: String
     ) {
         val requestBody = MultipartBody.Builder()
@@ -152,7 +158,7 @@ class SubmitAction : AnAction() {
             }
             requestBody.addFormDataPart(name, value)
         }
-        requestBody.addFormDataPart("file1", "$username.jar", file.asRequestBody())
+        requestBody.addFormDataPart("file1", "$username.jar", archive.asRequestBody())
 
         val submission = Request.Builder()
             .url(assignment.transport.uri)

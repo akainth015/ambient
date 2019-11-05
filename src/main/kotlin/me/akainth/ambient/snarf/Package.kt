@@ -26,7 +26,7 @@ class Package(source: Element) {
     /**
      * The package's type. Currently, only Java is supported, although support for C++ is on the roadmap
      */
-    val projectType: String = source.getAttribute("java")
+    val projectType: String = source.getAttribute("project_type")
 
     private val descriptionElement = source.getElementsByTagName("description").item(0)
     /**

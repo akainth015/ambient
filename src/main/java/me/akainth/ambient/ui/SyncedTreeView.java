@@ -33,7 +33,7 @@ public class SyncedTreeView<T> {
     private JPanel root;
     private JLabel sourceInputLabel;
     private DocumentInterpreter<T> interpreter;
-    private List<ConfirmationListener> confirmationListeners = new ArrayList<>();
+    private List<Listener> confirmationListeners = new ArrayList<>();
 
     /**
      * Creates a tree view with a label, input field, and the specified document interpreter
@@ -99,8 +99,8 @@ public class SyncedTreeView<T> {
     }
 
     private void runAllConfirmationListeners() {
-        for (ConfirmationListener listener : confirmationListeners) {
-            listener.onConfirmation(tree.getSelectedNodes(TreeNode.class, null));
+        for (Listener listener : confirmationListeners) {
+            listener.run(tree.getSelectedNodes(TreeNode.class, null));
         }
     }
 
@@ -138,7 +138,7 @@ public class SyncedTreeView<T> {
         return sourceInput.getText();
     }
 
-    public void addConfirmationListener(ConfirmationListener listener) {
+    public void addConfirmationListener(Listener listener) {
         confirmationListeners.add(listener);
     }
 
@@ -174,7 +174,7 @@ public class SyncedTreeView<T> {
         TreeModel interpret(Document document);
     }
 
-    public interface ConfirmationListener {
-        void onConfirmation(TreeNode[] selectedNodes);
+    public interface Listener {
+        void run(TreeNode[] selectedNodes);
     }
 }

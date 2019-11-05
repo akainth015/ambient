@@ -70,6 +70,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
         Credentials credentials = PasswordSafe.getInstance().get(SubmitAction.Companion.getCredentialAttributes());
         if (credentials != null) {
             username.setText(credentials.getUserName());
+            partnersTextField.setText(credentials.getUserName());
             password.setText(credentials.getPasswordAsString());
         }
 
