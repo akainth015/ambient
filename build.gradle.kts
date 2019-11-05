@@ -24,13 +24,16 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     setPlugins("java")
-    version = "LATEST-EAP-SNAPSHOT"
+    version = "2019.2.4"
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""Snarfed projects are now compatible with Eclipse""")
+    changeNotes("""Internal improvements to module snarfing""")
+}
+tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
+    token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
