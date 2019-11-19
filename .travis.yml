@@ -1,5 +1,6 @@
 language: java
-install: true
+install:
+  - chmod +x gradlew
 
 os: linux
 dist: trusty
