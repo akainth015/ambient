@@ -5,11 +5,8 @@ os: linux
 dist: trusty
 jdk: oraclejdk8
 
-script:
-  - ./gradlew build --scan -s
-
 deploy:
   provider: script
-  script: bash gradlew publishPlugin
+  script: ./gradlew publishPlugin
   on:
     branch: master
