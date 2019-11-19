@@ -74,10 +74,10 @@ class SubmitAction : AnAction() {
                 // Compile the project, and submit if there are no errors
                 CompilerManager.getInstance(project).compile(module) { aborted, errors, _, _ ->
                     if (!aborted && errors == 0) {
-                        val excludes = submissionConfirmationDialog.assignmentPicker.interpreter.model.excludes +
+                        val excludes =
+                            submissionConfirmationDialog.assignmentPicker.interpreter.model.excludes +
                                 submissionConfirmationDialog.assignment.excludes
-                        val archive =
-                            archive(module, excludes)
+                        val archive = archive(module, excludes)
                         submitTo(
                             submissionConfirmationDialog.assignment,
                             credentials,
@@ -120,9 +120,9 @@ class SubmitAction : AnAction() {
     }
 
     private fun reformat(project: Project, module: Module, rearrange: Boolean, optimizeImports: Boolean) {
-        ReformatCodeAction.reformatDirectory(
+        module.rootManager.sourceRoots.forEach { sourceRoot -> ReformatCodeAction.reformatDirectory(
             project,
-            PsiManager.getInstance(project).findDirectory(module.rootManager.sourceRoots[0])!!,
+            PsiManager.getInstance(project).findDirectory(sourceRoot)!!,
             object : DirectoryFormattingOptions {
                 override fun getTextRangeType() = TextRangeType.WHOLE_FILE
 
@@ -136,7 +136,7 @@ class SubmitAction : AnAction() {
 
                 override fun getFileTypeMask(): String? = null
             }
-        )
+        ) }
     }
 
     private fun submitTo(
