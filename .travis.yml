@@ -1,6 +1,5 @@
 language: java
-install:
-  - chmod +x gradlew
+install: true
 
 os: linux
 dist: trusty
@@ -8,6 +7,6 @@ jdk: oraclejdk11
 
 deploy:
   provider: script
-  script: ./gradlew publishPlugin
+  script: bash gradlew publishPlugin
   on:
     branch: master
