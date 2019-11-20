@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.0.4"
+version = "2.0.5"
 
 repositories {
     mavenCentral()
@@ -30,7 +30,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""Internal improvements to module snarfing""")
+    changeNotes("""Autofill for the partners field in the submission dialog""")
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
     token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))
