@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.0.5"
+version = "2.0.6"
 
 repositories {
     mavenCentral()
@@ -24,7 +24,6 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     setPlugins("java")
-    version = "2019.2.4"
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
