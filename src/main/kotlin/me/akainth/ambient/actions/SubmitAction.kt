@@ -76,13 +76,14 @@ class SubmitAction : AnAction() {
                     if (!aborted && errors == 0) {
                         val excludes =
                             submissionConfirmationDialog.assignmentPicker.interpreter.model.excludes +
-                                submissionConfirmationDialog.assignment.excludes
+                                    submissionConfirmationDialog.assignment.excludes
                         val archive = archive(module, excludes)
                         submitTo(
                             submissionConfirmationDialog.assignment,
                             credentials,
                             archive,
-                            submissionConfirmationDialog.partnersTextField.text
+                            submissionConfirmationDialog.partnersTextField.text,
+                            project
                         )
                     }
                 }
@@ -120,30 +121,33 @@ class SubmitAction : AnAction() {
     }
 
     private fun reformat(project: Project, module: Module, rearrange: Boolean, optimizeImports: Boolean) {
-        module.rootManager.sourceRoots.forEach { sourceRoot -> ReformatCodeAction.reformatDirectory(
-            project,
-            PsiManager.getInstance(project).findDirectory(sourceRoot)!!,
-            object : DirectoryFormattingOptions {
-                override fun getTextRangeType() = TextRangeType.WHOLE_FILE
+        module.rootManager.sourceRoots.forEach { sourceRoot ->
+            ReformatCodeAction.reformatDirectory(
+                project,
+                PsiManager.getInstance(project).findDirectory(sourceRoot)!!,
+                object : DirectoryFormattingOptions {
+                    override fun getTextRangeType() = TextRangeType.WHOLE_FILE
 
-                override fun getSearchScope(): SearchScope? = null
+                    override fun getSearchScope(): SearchScope? = null
 
-                override fun isOptimizeImports() = optimizeImports
+                    override fun isOptimizeImports() = optimizeImports
 
-                override fun isIncludeSubdirectories() = true
+                    override fun isIncludeSubdirectories() = true
 
-                override fun isRearrangeCode() = rearrange
+                    override fun isRearrangeCode() = rearrange
 
-                override fun getFileTypeMask(): String? = null
-            }
-        ) }
+                    override fun getFileTypeMask(): String? = null
+                }
+            )
+        }
     }
 
     private fun submitTo(
         assignment: Assignment,
         credentials: Credentials,
         archive: File,
-        partners: String
+        partners: String,
+        project: Project
     ) {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -167,9 +171,18 @@ class SubmitAction : AnAction() {
 
         val submissionResponse = OkHttpClient().newCall(submission).execute()
         submissionResponse.body?.let { body ->
-            "<a href=\"(.+)\">click here to view them.</a>".toRegex().find(body.string())?.let { result ->
+            val result = "<a href=\"(.+)\">click here to view them.</a>".toRegex().find(body.string())
+            if (result != null) {
                 val viewSubmissionUrl = result.groupValues[1]
                 Desktop.getDesktop().browse(URI(viewSubmissionUrl))
+            } else {
+                val notification = Notification(
+                    "Ambient.Submit",
+                    "Submission failed",
+                    "There was an unexpected response from WebCAT. Please make sure your username and password are correct",
+                    NotificationType.ERROR
+                )
+                Notifications.Bus.notify(notification, project)
             }
         }
     }

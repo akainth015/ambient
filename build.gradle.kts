@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.0.6"
+version = "2.0.7"
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ dependencies {
     implementation("com.squareup.okhttp3", "okhttp", "4.1.0")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
-    testCompile("junit", "junit", "4.12")
+    testImplementation("junit", "junit", "4.12")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -29,7 +29,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""Autofill for the partners field in the submission dialog""")
+    changeNotes("""Enable support for IntelliJ 2020.1""")
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
     token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))
