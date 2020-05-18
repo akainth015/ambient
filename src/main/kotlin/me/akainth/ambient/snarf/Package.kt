@@ -6,6 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode
 /**
  * Describes a package in a Snarf site
  */
+@Suppress("unused")
 class Package(source: Element) {
     /**
      * The package's name, according to the Snarf site

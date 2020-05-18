@@ -20,6 +20,7 @@ import com.intellij.openapi.module.ModuleUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.rootManager
 import com.intellij.openapi.vfs.VfsUtil
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.SearchScope
 import me.akainth.ambient.submitter.Assignment
@@ -31,6 +32,7 @@ import java.awt.Desktop
 import java.io.File
 import java.net.URI
 import java.nio.file.attribute.FileTime
+import java.util.*
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
 
@@ -105,7 +107,13 @@ class SubmitAction : AnAction() {
     private fun archive(module: Module, excludes: Array<String>): File {
         val archive = File.createTempFile(module.name, ".jar")
         val jarOutputStream = JarOutputStream(archive.outputStream())
-        module.rootManager.sourceRoots.flatMap { VfsUtil.collectChildrenRecursively(it) }
+        val sourceFilesToInclude = LinkedList<VirtualFile>()
+        module.rootManager.sourceRoots.forEach {
+            VfsUtil.collectChildrenRecursively(it).forEach { sourceFile ->
+                sourceFilesToInclude += sourceFile
+            }
+        }
+        sourceFilesToInclude
             .filter { !it.isDirectory }
             .filter { !excludes.contains(it.name) }
             .forEach { file ->
