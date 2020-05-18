@@ -5,7 +5,7 @@ import org.w3c.dom.Element
 class AssignmentGroup(source: Element) {
     val assignments: Array<Assignment>
 
-    val name = source.getAttribute("name")
+    val name = source.getAttribute("name")!!
 
     init {
         val assignmentNodes = source.getElementsByTagName("assignment")

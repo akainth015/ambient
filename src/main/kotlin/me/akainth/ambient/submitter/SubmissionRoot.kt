@@ -28,12 +28,12 @@ class SubmissionRoot constructor(submissionRootDocument: Document) {
             }
         }
 
-    val assignmentGroup: AssignmentGroup
+    private val assignmentGroup: AssignmentGroup
         get() {
             val assignmentGroupElement =
                 submissionTargetElement.getElementsByTagName("assignment-group").item(0) as Element
             return AssignmentGroup(assignmentGroupElement)
         }
 
-    val assignments = assignmentGroup.assignments
+    private val assignments = assignmentGroup.assignments
 }

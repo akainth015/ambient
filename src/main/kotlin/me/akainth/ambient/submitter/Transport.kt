@@ -4,7 +4,7 @@ import org.w3c.dom.Element
 
 class Transport(source: Element) {
     val params: Array<Param>
-    val uri = source.getAttribute("uri")
+    val uri = source.getAttribute("uri")!!
 
     init {
         val paramsNodes = source.getElementsByTagName("param")

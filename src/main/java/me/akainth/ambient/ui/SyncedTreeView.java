@@ -26,14 +26,14 @@ import java.util.List;
  * An interface component that updates a tree view with data from a remote source
  */
 public class SyncedTreeView<T> {
-    private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+    private static final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
     private JTextField sourceInput;
     private Tree tree;
     @SuppressWarnings("unused")
     private JPanel root;
     private JLabel sourceInputLabel;
-    private DocumentInterpreter<T> interpreter;
-    private List<Listener> confirmationListeners = new ArrayList<>();
+    private final DocumentInterpreter<T> interpreter;
+    private final List<Listener> confirmationListeners = new ArrayList<>();
 
     /**
      * Creates a tree view with a label, input field, and the specified document interpreter

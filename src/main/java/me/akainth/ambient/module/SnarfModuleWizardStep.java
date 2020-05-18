@@ -18,11 +18,11 @@ import javax.swing.tree.TreeSelectionModel;
  * Allows a user to configure which package they will import from a snarf site
  */
 public class SnarfModuleWizardStep extends ModuleWizardStep {
-    private static String SNARF_SITE = "Ambient Snarf Site";
+    private static final String SNARF_SITE = "Ambient Snarf Site";
     private JPanel root;
-    private SyncedTreeView packagesPreview;
-    private SnarfModuleBuilder moduleBuilder;
-    private WizardContext wizardContext;
+    private SyncedTreeView<SnarfSite> packagesPreview;
+    private final SnarfModuleBuilder moduleBuilder;
+    private final WizardContext wizardContext;
 
     public SnarfModuleWizardStep(SnarfModuleBuilder moduleBuilder, WizardContext wizardContext) {
         this.moduleBuilder = moduleBuilder;
