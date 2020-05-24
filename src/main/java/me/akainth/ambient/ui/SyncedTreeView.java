@@ -24,6 +24,8 @@ import java.util.List;
 
 /**
  * An interface component that updates a tree view with data from a remote source
+ *
+ * @author akainth
  */
 public class SyncedTreeView<T> {
     private static final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

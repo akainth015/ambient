@@ -13,6 +13,8 @@ import me.akainth.ambient.snarf.SnarfTask
 
 /**
  * The module that will appear in the New Project and New Module dialogs.
+ *
+ * @author akainth
  */
 class SnarfModuleBuilder : JavaModuleBuilder(), ModuleBuilderListener {
     lateinit var snarfPackage: Package

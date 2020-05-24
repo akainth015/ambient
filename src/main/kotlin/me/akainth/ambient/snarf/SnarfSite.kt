@@ -6,6 +6,11 @@ import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 import javax.swing.tree.TreeModel
 
+/**
+ * Type-safe representation of a snarf site
+ *
+ * @author akainth
+ */
 class SnarfSite constructor(snarfSiteDocument: Document) {
     private val snarfSiteElement = snarfSiteDocument.getElementsByTagName("snarf_site").item(0) as Element
 

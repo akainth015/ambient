@@ -1,7 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+//buildscript {
+//    dependencies {
+//        classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
+//    }
+//}
+
 plugins {
     id("org.jetbrains.intellij") version "0.4.11"
+    id("org.jetbrains.dokka") version "0.10.1"
     java
     kotlin("jvm") version "1.3.50"
 }
@@ -11,6 +18,7 @@ version = "2.0.8"
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -36,4 +44,8 @@ tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+tasks.getByName<org.jetbrains.dokka.gradle.DokkaTask>("dokka") {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/dokka"
 }

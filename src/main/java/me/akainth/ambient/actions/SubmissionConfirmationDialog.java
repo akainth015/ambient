@@ -23,7 +23,7 @@ import javax.swing.tree.TreeSelectionModel;
  * Shows the user information about what they are submitting, and to which assignment. They can either confirm or cancel
  * the submission, as well as edit the source and target.
  *
- * @author akain
+ * @author akainth
  */
 public class SubmissionConfirmationDialog extends DialogWrapper {
     private JPanel root;

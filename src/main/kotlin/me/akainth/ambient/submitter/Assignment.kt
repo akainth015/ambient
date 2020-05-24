@@ -2,6 +2,11 @@ package me.akainth.ambient.submitter
 
 import org.w3c.dom.Element
 
+/**
+ * A type-safe representation of a submission assignment
+ *
+ * @author akainth
+ */
 class Assignment(private val source: Element) {
     val excludes: Array<String>
         get() {

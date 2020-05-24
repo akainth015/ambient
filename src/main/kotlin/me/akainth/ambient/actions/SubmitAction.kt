@@ -39,6 +39,8 @@ import java.util.zip.ZipEntry
 /**
  * Action that attempts to resolve the current module, allows the user to choose where to confirm the action, then
  * compiles, formats, packages, and submits the module
+ *
+ * @author akainth
  */
 class SubmitAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {

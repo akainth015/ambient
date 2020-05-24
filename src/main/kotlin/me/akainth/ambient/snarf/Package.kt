@@ -5,6 +5,8 @@ import javax.swing.tree.DefaultMutableTreeNode
 
 /**
  * Describes a package in a Snarf site
+ *
+ * @author akainth
  */
 @Suppress("unused")
 class Package(source: Element) {

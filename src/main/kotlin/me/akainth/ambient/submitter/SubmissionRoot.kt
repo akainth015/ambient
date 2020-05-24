@@ -5,6 +5,11 @@ import org.w3c.dom.Element
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 
+/**
+ * A type-safe representation of a submission root
+ *
+ * @author akainth
+ */
 class SubmissionRoot constructor(submissionRootDocument: Document) {
     private val submissionTargetElement =
         submissionRootDocument.getElementsByTagName("submission-targets").item(0) as Element

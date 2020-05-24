@@ -14,6 +14,11 @@ import java.nio.file.Path
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
+/**
+ * A task that imports a snarf package from a site into the specified module
+ *
+ * @author akainth
+ */
 class SnarfTask(
     private val module: Module,
     private val snarfPackage: Package,

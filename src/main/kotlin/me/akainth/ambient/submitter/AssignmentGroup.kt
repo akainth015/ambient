@@ -2,6 +2,11 @@ package me.akainth.ambient.submitter
 
 import org.w3c.dom.Element
 
+/**
+ * A type-safe representation of an assignment group
+ *
+ * @author akainth
+ */
 class AssignmentGroup(source: Element) {
     val assignments: Array<Assignment>
 

@@ -16,6 +16,8 @@ import javax.swing.tree.TreeSelectionModel;
 
 /**
  * Allows a user to configure which package they will import from a snarf site
+ *
+ * @author akainth
  */
 public class SnarfModuleWizardStep extends ModuleWizardStep {
     private static final String SNARF_SITE = "Ambient Snarf Site";
