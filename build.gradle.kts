@@ -37,7 +37,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""Internal improvements to the submission source file gatherer""")
+    changeNotes("""Update documentation""")
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
     token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))
