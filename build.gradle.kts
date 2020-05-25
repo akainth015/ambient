@@ -1,11 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-//buildscript {
-//    dependencies {
-//        classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
-//    }
-//}
-
 plugins {
     id("org.jetbrains.intellij") version "0.4.11"
     id("org.jetbrains.dokka") version "0.10.1"
@@ -14,7 +8,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.0.8"
+version = "2.0.9"
 
 repositories {
     mavenCentral()
@@ -37,7 +31,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""Update documentation""")
+    changeNotes("""Fix a long-standing bug with toggling the reformat checkbox""")
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
     token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))

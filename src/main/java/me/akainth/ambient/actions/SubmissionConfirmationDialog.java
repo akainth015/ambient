@@ -60,7 +60,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
                 reorganizeCheckBox.setEnabled(true);
                 optimizeImportsCheckBox.setEnabled(true);
             } else {
-                optimizeImportsCheckBox.setSelected(false);
+                reorganizeCheckBox.setSelected(false);
                 reorganizeCheckBox.setEnabled(false);
                 optimizeImportsCheckBox.setSelected(false);
                 optimizeImportsCheckBox.setEnabled(false);
