@@ -15,9 +15,15 @@ class SubmissionRoot constructor(submissionRootDocument: Document) {
         submissionRootDocument.getElementsByTagName("submission-targets").item(0) as Element
 
     fun buildTreeModel(): DefaultTreeModel {
-        val root = DefaultMutableTreeNode(assignmentGroup.name)
+        val root = DefaultMutableTreeNode("Assignment Groups")
 
-        assignments.map { DefaultMutableTreeNode(it) }.forEach {
+        assignmentGroups.map {
+            val node = DefaultMutableTreeNode(it)
+            it.assignments
+                .map { DefaultMutableTreeNode(it) }
+                .forEach { node.add(it) }
+            node
+        }.forEach {
             root.add(it)
         }
 
@@ -33,12 +39,12 @@ class SubmissionRoot constructor(submissionRootDocument: Document) {
             }
         }
 
-    private val assignmentGroup: AssignmentGroup
+    private val assignmentGroups: Array<AssignmentGroup>
         get() {
-            val assignmentGroupElement =
-                submissionTargetElement.getElementsByTagName("assignment-group").item(0) as Element
-            return AssignmentGroup(assignmentGroupElement)
+            val assignmentGroupNodes = submissionTargetElement.getElementsByTagName("assignment-group")
+            return Array(assignmentGroupNodes.length) {
+                val assignmentGroupElement = assignmentGroupNodes.item(it) as Element
+                AssignmentGroup(assignmentGroupElement)
+            }
         }
-
-    private val assignments = assignmentGroup.assignments
 }

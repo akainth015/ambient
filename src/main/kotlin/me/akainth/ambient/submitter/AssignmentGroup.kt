@@ -19,4 +19,6 @@ class AssignmentGroup(source: Element) {
             Assignment(assignmentElement)
         }
     }
+
+    override fun toString(): String = name
 }
