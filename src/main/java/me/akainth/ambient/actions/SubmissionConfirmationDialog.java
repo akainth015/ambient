@@ -101,6 +101,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
                 return model.buildTreeModel();
             }
         });
+        assignmentPicker.getTree().setRootVisible(false);
     }
 
     public SyncedTreeView<SubmissionRoot> getAssignmentPicker() {

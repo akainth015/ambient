@@ -52,7 +52,6 @@ public class SyncedTreeView<T> {
         clearTree();
         updatePreview();
 
-        tree.setRootVisible(false);
         tree.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
