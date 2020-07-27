@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.0.10"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
@@ -31,7 +31,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes("""Fix a long-standing bug with toggling the reformat checkbox""")
+    changeNotes("""Ambient is now compiled for IntelliJ 2020.2. SyncedTreeViews will update in the background to avoid freezing the IDE.""")
 }
 tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
     token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))

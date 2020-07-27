@@ -37,6 +37,8 @@ public class SyncedTreeView<T> {
     private final DocumentInterpreter<T> interpreter;
     private final List<Listener> confirmationListeners = new ArrayList<>();
 
+    private Thread updateThread = new Thread();
+
     /**
      * Creates a tree view with a label, input field, and the specified document interpreter
      *
@@ -145,20 +147,25 @@ public class SyncedTreeView<T> {
     }
 
     private void updatePreview() {
-        try {
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        updateThread.interrupt();
+        Runnable runnable = () -> {
+            try {
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-            InputStream documentStream = new URL(sourceInput.getText()).openStream();
-            Document document = documentBuilder.parse(documentStream);
+                InputStream documentStream = new URL(sourceInput.getText()).openStream();
+                Document document = documentBuilder.parse(documentStream);
 
-            TreeModel model = interpreter.interpret(document);
-            tree.setModel(model);
-            for (int i = 0; i < tree.getRowCount(); i++) {
-                tree.expandRow(i);
+                TreeModel model = interpreter.interpret(document);
+                tree.setModel(model);
+                for (int i = 0; i < tree.getRowCount(); i++) {
+                    tree.expandRow(i);
+                }
+            } catch (IOException | ParserConfigurationException | SAXException e) {
+                clearTree();
             }
-        } catch (IOException | ParserConfigurationException | SAXException e) {
-            clearTree();
-        }
+        };
+        updateThread = new Thread(runnable);
+        updateThread.start();
     }
 
     /**
