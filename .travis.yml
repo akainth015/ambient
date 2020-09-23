@@ -1,8 +1,9 @@
 language: java
+os: windows
 
 deploy:
   - provider: script
-    script: bash ./gradlew publishPlugin
+    script: gradlew.bat publishPlugin
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
