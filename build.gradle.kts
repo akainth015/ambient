@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.1.0"
+version = "2.2.0"
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ tasks.patchPluginXml {
     changeNotes("""Ambient is now compiled for IntelliJ 2020.2. SyncedTreeViews will update in the background to avoid freezing the IDE.""")
 }
 tasks.publishPlugin {
-    token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))
+    token(System.getenv("PUBLISH_TOKEN"))
 }
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
