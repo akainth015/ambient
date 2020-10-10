@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.intellij") version "0.4.11"
+    id("org.jetbrains.intellij") version "0.4.26"
     id("org.jetbrains.dokka") version "0.10.1"
     java
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.3.70"
 }
 
 group = "me.akainth"
@@ -17,9 +17,8 @@ repositories {
 
 dependencies {
     @Suppress("SpellCheckingInspection")
-    implementation("com.squareup.okhttp3", "okhttp", "4.1.0")
-    implementation(kotlin("reflect"))
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
+    implementation(kotlin("reflect", "1.4.0"))
     testImplementation("junit", "junit", "4.12")
 }
 
@@ -30,10 +29,10 @@ intellij {
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
-tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
+tasks.patchPluginXml {
     changeNotes("""Ambient is now compiled for IntelliJ 2020.2. SyncedTreeViews will update in the background to avoid freezing the IDE.""")
 }
-tasks.getByName<org.jetbrains.intellij.tasks.PublishTask>("publishPlugin") {
+tasks.publishPlugin {
     token(System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken"))
 }
 tasks.withType<KotlinCompile> {
