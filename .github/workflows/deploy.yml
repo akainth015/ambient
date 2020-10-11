@@ -1,10 +1,10 @@
-name: Publish plugin when deployed
+name: Publish plugin
 on:
   push:
     branches:
       - master
 jobs:
-  gradle:
+  JetBrains plugin portal:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,5 +12,7 @@ jobs:
         with:
           java-version: 11
       - uses: eskatos/gradle-command-action@v1
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         with:
           arguments: publishPlugin

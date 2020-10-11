@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.intellij") version "0.4.26"
     id("org.jetbrains.dokka") version "0.10.1"
     java
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.4.10"
 }
 
 group = "me.akainth"
@@ -16,9 +16,7 @@ repositories {
 }
 
 dependencies {
-    @Suppress("SpellCheckingInspection")
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
-    implementation(kotlin("reflect", "1.4.0"))
     testImplementation("junit", "junit", "4.12")
 }
 
