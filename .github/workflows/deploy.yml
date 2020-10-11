@@ -4,7 +4,8 @@ on:
     branches:
       - master
 jobs:
-  JetBrains plugin portal:
+  publish:
+    name: Publish to JetBrains marketplace
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
