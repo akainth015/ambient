@@ -3,6 +3,7 @@ name: Run Gradle on PRs
 on: [push, pull_request]
 jobs:
   gradle:
+    name: Check Plugin
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -11,4 +12,4 @@ jobs:
         java-version: 11
     - uses: eskatos/gradle-command-action@v1
       with:
-        arguments: build
+        arguments: check
