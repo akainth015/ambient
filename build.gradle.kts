@@ -24,13 +24,14 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
+    version = "2020.2.3" // TODO remove once building for EAP is fixed
     setPlugins("java")
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.patchPluginXml {
-    changeNotes("""Ambient is now compiled for IntelliJ 2020.3.""")
+    changeNotes("""Ambient is now using Github Actions for CI""")
 }
 tasks.publishPlugin {
     token(System.getenv("PUBLISH_TOKEN"))
