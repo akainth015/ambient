@@ -22,7 +22,6 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2020.2.3" // TODO remove once building for EAP is fixed
     setPlugins("java")
 }
 configure<JavaPluginConvention> {
