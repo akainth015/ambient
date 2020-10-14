@@ -13,7 +13,7 @@ jobs:
     - uses: eskatos/gradle-command-action@v1
       with:
         arguments: check
-    - uses: actions/upload-artifact
+    - uses: actions/upload-artifact@v2
       with:
         name: ambient.jar
         path: build/libs/*
