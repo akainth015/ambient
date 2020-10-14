@@ -1,5 +1,5 @@
 # .github/workflows/gradle-build-pr.yml
-name: Run Gradle on PRs
+name: Build
 on: [push, pull_request]
 jobs:
   gradle:
@@ -13,3 +13,8 @@ jobs:
     - uses: eskatos/gradle-command-action@v1
       with:
         arguments: check
+	- uses: actions/upload-artifact
+	  with:
+		name: ambient.jar
+	    path: build/libs/*
+
