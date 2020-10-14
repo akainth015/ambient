@@ -1,5 +1,5 @@
 name: Publish plugin
-on:workflow_dispatch
+on: workflow_dispatch
 jobs:
   publish:
     name: Publish to JetBrains marketplace
