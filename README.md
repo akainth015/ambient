@@ -6,7 +6,7 @@ Written with Kotlin, designed with Java + IntelliJ Form Designer. Build orchestr
 To start helping with the plugin, just start editing the source files.
 To test the plugin, run `./gradlew runIde`, which will launch IntelliJ Community Edition with the version specified in `build.gradle.kts`.
 
-The plugin will automatically be published upon merge to `master` by GitHub actions.
+Upon being merged to `master`, the plugin will the published once the `publish` workflow is manually triggered by a maintainer.
 
 ## How to Use Ambient
 ### Snarfing
