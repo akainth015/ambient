@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.intellij") version "0.4.26"
+    id("org.jetbrains.intellij") version "0.7.0"
     id("org.jetbrains.dokka") version "0.10.1"
     java
     kotlin("jvm") version "1.4.10"
 }
 
 group = "me.akainth"
-version = "2.3.0"
+version = "2.3.1"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 tasks.patchPluginXml {
-    changeNotes("""Ambient is now using Github Actions for CI""")
+    changeNotes("""Updated for 2021 EAP""")
 }
 tasks.publishPlugin {
     token(System.getenv("PUBLISH_TOKEN"))
