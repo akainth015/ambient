@@ -1,14 +1,12 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("org.jetbrains.intellij") version "0.7.0"
-    id("org.jetbrains.dokka") version "0.10.1"
+    id("org.jetbrains.intellij") version "1.3.1"
+    id("org.jetbrains.dokka") version "1.6.10"
     java
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.6.10"
 }
 
 group = "me.akainth"
-version = "2.3.1"
+version = "2.3.2"
 
 repositories {
     mavenCentral()
@@ -22,21 +20,14 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    setPlugins("java")
+    version.set("LATEST-EAP-SNAPSHOT")
+    plugins.set(listOf("java"))
 }
+
+tasks.publishPlugin {
+    token.set(System.getenv("PUBLISH_TOKEN"))
+}
+
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
-}
-tasks.patchPluginXml {
-    changeNotes("""Updated for 2021 EAP""")
-}
-tasks.publishPlugin {
-    token(System.getenv("PUBLISH_TOKEN"))
-}
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-tasks.getByName<org.jetbrains.dokka.gradle.DokkaTask>("dokka") {
-    outputFormat = "html"
-    outputDirectory = "$buildDir/dokka"
 }
