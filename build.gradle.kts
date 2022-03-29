@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.3.4"
+version = "2.3.5"
 
 repositories {
     mavenCentral()
@@ -20,7 +20,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2021.3.2")
+    version.set("2021.3.3")
     plugins.set(listOf("java"))
 }
 
