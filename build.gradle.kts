@@ -6,28 +6,29 @@ plugins {
 }
 
 group = "me.akainth"
-version = "2.3.5"
+version = "22.1"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
-    testImplementation("junit", "junit", "4.12")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2021.3.3")
+    version.set("2022.1.4")
     plugins.set(listOf("java"))
 }
 
 tasks.publishPlugin {
-    token.set(System.getenv("PUBLISH_TOKEN"))
+    val publishToken = System.getenv("PUBLISH_TOKEN")
+    token.set(publishToken)
 }
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+java {
+    toolchain {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
 }
