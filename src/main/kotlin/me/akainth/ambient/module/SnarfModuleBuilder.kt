@@ -17,6 +17,10 @@ import me.akainth.ambient.snarf.SnarfTask
  * @author akainth
  */
 class SnarfModuleBuilder : JavaModuleBuilder(), ModuleBuilderListener {
+    override fun isAvailable(): Boolean {
+        return true
+    }
+
     lateinit var snarfPackage: Package
 
     init {
