@@ -1,4 +1,6 @@
-# ambient ![Build](https://github.com/akainth015/ambient/workflows/Build/badge.svg)
+# ambient 
+![Build](https://github.com/akainth015/ambient/workflows/Build/badge.svg)
+
 A plugin for IntelliJ that enables assignment import and submission
 
 Written with Kotlin, designed with Java + IntelliJ Form Designer. Build orchestrated by Gradle.
@@ -11,6 +13,7 @@ Upon being merged to `master`, the plugin will the published once the `publish` 
 ## How to Use Ambient
 ### Snarfing
 You can snarf by getting the URL for your snarf site and then pasting it into the field in the File > New > Module dialog.
+
 ![](images/snarf.png)
 
 ### Submitting to WebCAT
@@ -20,4 +23,5 @@ Get your submission URL from Home > My Profile > Personalized Service URLs. Copy
 
 ## Code Formatting for WebCAT
 WebCAT likes its code to be formatted in a special way. To replicate this in IntelliJ, [download this gist here](https://gist.github.com/Neragin/98e569dfc561622f5b3227287570d3c7#file-vtcsformatter-xml). Then, go into File > Settings > Editor > Code Style > Java. From there, click the gear icon > Import Scheme > Eclipse XML Profile. Make sure to select the vtcsformatter.xml you downloaded, and press apply.
+
 ![](images/codestyle.png) 
