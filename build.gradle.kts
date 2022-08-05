@@ -1,12 +1,12 @@
 plugins {
-    id("org.jetbrains.intellij") version "1.7.0"
+    id("org.jetbrains.intellij") version "1.8.0"
     java
-    kotlin("jvm") version "1.7.0"
+    kotlin("jvm") version "1.7.10"
     id("org.jetbrains.dokka") version "1.7.10"
 }
 
 group = "me.akainth"
-version = "22.2"
+version = "22.2.1"
 
 repositories {
     mavenCentral()
