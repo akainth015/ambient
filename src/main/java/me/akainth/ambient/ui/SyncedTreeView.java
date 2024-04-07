@@ -1,6 +1,6 @@
 package me.akainth.ambient.ui;
 
-import com.intellij.ui.TreeSpeedSearch;
+import com.intellij.ui.TreeUIHelper;
 import com.intellij.ui.treeStructure.Tree;
 import com.sun.istack.Nullable;
 import org.w3c.dom.Document;
@@ -14,11 +14,13 @@ import javax.swing.tree.TreeNode;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class SyncedTreeView<T> {
     private final DocumentInterpreter<T> interpreter;
     private final List<Listener> confirmationListeners = new ArrayList<>();
 
-    private Thread updateThread = new Thread();
+    private Thread updateThread = null;
 
     /**
      * Creates a tree view with a label, input field, and the specified document interpreter
@@ -82,7 +84,7 @@ public class SyncedTreeView<T> {
 
             }
         });
-        new TreeSpeedSearch(tree);
+        TreeUIHelper.getInstance().installTreeSpeedSearch(tree);
 
         sourceInput.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -147,20 +149,25 @@ public class SyncedTreeView<T> {
     }
 
     private void updatePreview() {
-        updateThread.interrupt();
+        if (updateThread != null) {
+            updateThread.interrupt();
+        }
         Runnable runnable = () -> {
             try {
                 DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-                InputStream documentStream = new URL(sourceInput.getText()).openStream();
+                InputStream documentStream = new URI(sourceInput.getText()).toURL().openStream();
                 Document document = documentBuilder.parse(documentStream);
 
                 TreeModel model = interpreter.interpret(document);
                 tree.setModel(model);
-                for (int i = 0; i < tree.getRowCount(); i++) {
-                    tree.expandRow(i);
-                }
-            } catch (IOException | ParserConfigurationException | SAXException e) {
+                EventQueue.invokeLater(() -> {
+                    for (int i = 0; i < tree.getRowCount(); i++) {
+                        tree.expandRow(i);
+                    }
+                });
+            } catch (IOException | ParserConfigurationException | SAXException | URISyntaxException |
+                     IllegalArgumentException e) {
                 clearTree();
             }
         };

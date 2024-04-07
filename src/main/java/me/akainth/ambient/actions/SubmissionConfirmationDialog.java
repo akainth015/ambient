@@ -7,7 +7,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.ui.TreeSpeedSearch;
+import com.intellij.ui.TreeUIHelper;
 import me.akainth.ambient.submitter.Assignment;
 import me.akainth.ambient.submitter.SubmissionRoot;
 import me.akainth.ambient.ui.SyncedTreeView;
@@ -75,7 +75,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
         }
 
         assignmentPicker.getTree().getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        new TreeSpeedSearch(assignmentPicker.getTree());
+        TreeUIHelper.getInstance().installTreeSpeedSearch(assignmentPicker.getTree());
 
         init();
     }
@@ -87,7 +87,7 @@ public class SubmissionConfirmationDialog extends DialogWrapper {
     }
 
     private void createUIComponents() {
-        assignmentPicker = new SyncedTreeView<>("Assignment Source", PropertiesComponent.getInstance().getValue(SubmitAction.SUBMISSION_ROOT, "http://"), new SyncedTreeView.DocumentInterpreter<SubmissionRoot>() {
+        assignmentPicker = new SyncedTreeView<>("Assignment Source", PropertiesComponent.getInstance().getValue(SubmitAction.SUBMISSION_ROOT, "http://"), new SyncedTreeView.DocumentInterpreter<>() {
             private SubmissionRoot model;
 
             @Override

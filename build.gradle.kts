@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.intellij") version "1.11.0"
+    id("org.jetbrains.intellij") version "1.17.3"
     java
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.dokka") version "1.7.10"
+    kotlin("jvm") version "1.9.23"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "me.akainth"
-version = "22.3.1"
+version = "24.1"
 
 repositories {
     mavenCentral()
@@ -20,7 +20,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2022.3.1")
+    version.set("2024.1")
     plugins.set(listOf("java"))
 }
 
@@ -37,4 +37,8 @@ java {
     toolchain {
         sourceCompatibility = JavaVersion.VERSION_17
     }
+}
+
+tasks.compileJava {
+    options.compilerArgs.addLast("-Xlint:deprecation")
 }

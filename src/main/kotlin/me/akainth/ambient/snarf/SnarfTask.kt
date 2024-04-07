@@ -8,7 +8,7 @@ import com.intellij.openapi.roots.ContentEntry
 import com.intellij.openapi.roots.ModuleRootModificationUtil
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
-import java.net.URL
+import java.net.URI
 import java.nio.file.FileSystems
 import java.nio.file.Path
 import java.util.zip.ZipEntry
@@ -32,7 +32,7 @@ class SnarfTask(
             defaultFs.getPathMatcher("glob:$glob")
         }
         val jarFilePattern = defaultFs.getPathMatcher("glob:*.jar")
-        val inputStream = URL(snarfPackage.entry).openStream()
+        val inputStream = URI(snarfPackage.entry).toURL().openStream()
         val zipInputStream = ZipInputStream(inputStream)
 
         WriteCommandAction.runWriteCommandAction(module.project) {
