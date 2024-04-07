@@ -1,5 +1,5 @@
 # ambient 
-![Build](https://github.com/akainth015/ambient/workflows/Build/badge.svg)
+[![Build](https://github.com/akainth015/ambient/actions/workflows/gradle-build-pr.yml/badge.svg)](https://github.com/akainth015/ambient/actions/workflows/gradle-build-pr.yml)
 
 A plugin for IntelliJ that enables assignment import and submission
 
