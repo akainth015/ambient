@@ -1,27 +1,33 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.intellij") version "1.17.3"
+    id("org.jetbrains.intellij.platform") version "2.1.0"
     java
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.0.20"
     id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "me.akainth"
-version = "24.1"
+version = "24.3"
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
-}
+    intellijPlatform {
+        intellijIdeaCommunity("2024.2.3")
+        bundledPlugin("com.intellij.java")
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-    version.set("2024.1")
-    plugins.set(listOf("java"))
+        pluginVerifier()
+        zipSigner()
+        instrumentationTools()
+    }
 }
 
 tasks.publishPlugin {
@@ -30,12 +36,14 @@ tasks.publishPlugin {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
 }
 
 java {
     toolchain {
-        sourceCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
     }
 }
 
