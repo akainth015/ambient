@@ -30,6 +30,10 @@ dependencies {
     }
 }
 
+tasks.patchPluginXml {
+    untilBuild = provider { null }
+}
+
 tasks.publishPlugin {
     val publishToken = System.getenv("PUBLISH_TOKEN")
     token.set(publishToken)
