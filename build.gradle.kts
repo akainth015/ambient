@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "me.akainth"
-version = "24.3"
+version = "24.4"
 
 repositories {
     mavenCentral()
@@ -28,6 +28,10 @@ dependencies {
         zipSigner()
         instrumentationTools()
     }
+}
+
+tasks.patchPluginXml {
+    untilBuild = provider { null }
 }
 
 tasks.publishPlugin {
